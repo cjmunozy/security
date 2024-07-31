@@ -29,8 +29,13 @@ router.post('/login', async function (req, res, next) {
       let userData = await models.users.findOne({
         where: {
           name: username
-        }
+        },
+        /*6.1 Incluya todos los modelos asociados */
+        include: { all: true, nested: true },
+        raw: true,
+        nest: true
       })
+
       /* 7. Verifique que userData sea diferente de null, y que userData.password sea diferente de null. */
       if (userData != null && userData.password != null) {
         /* 8. Divida userData.password por el símbolo "$", y use el primer elemento como SALT. */
@@ -52,6 +57,9 @@ router.post('/login', async function (req, res, next) {
           /* 9.3. Habilite la sesión */
           req.session.loggedin = true;
           req.session.username = username;
+
+          /* 9.4 Agregue el rol del usuario en la sesión */
+          req.session.role = userData.users_roles.roles_idrole_role.name
 
           /* 10. En caso de éxito, redirija a '/users' */
           res.redirect('/users');
