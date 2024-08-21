@@ -75,7 +75,7 @@ router.post('/login', async function (req, res, next) {
           );
 
           // Envía el token como respuesta
-          res.json({ token });
+          res.render('token', { token });
         } else {
           /* 11. En caso de fallo, redirija a '/' */
           res.redirect('/');
