@@ -3,8 +3,6 @@ var router = express.Router();
 
 /* 1. Importe el módulo crypto */
 let crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'byqI7lRE9nRiKWgKNrZoAw==';
 
 /* 2. Cargue los modelos de acuerdo con la configuración de la conexión */
 const sequelize = require('../models/index.js').sequelize;
@@ -66,16 +64,9 @@ router.post('/login', async function (req, res, next) {
           /* 10. En caso de éxito, redirija a '/users' */
           // res.redirect('/users');
           const userRole = userData.users_roles.roles_idrole_role.name;
-          
-          // Genera un token JWT con el rol del usuario
-          const token = jwt.sign(
-            { username, role: userRole },
-            SECRET_KEY,
-            { expiresIn: '1h' } // El token expira en 1 hora
-          );
 
           if (userRole == 'user') {
-            res.redirect(`/token?token=${token}`); 
+            res.redirect(`/token`); 
           } else {
             res.redirect('/users'); 
           }

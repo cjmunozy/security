@@ -1,6 +1,8 @@
 /* 1. Carga de variables de entorno */
 require('dotenv').config()
 
+const secret = process.env.SECRET_KEY;
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
