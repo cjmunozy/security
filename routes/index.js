@@ -74,8 +74,11 @@ router.post('/login', async function (req, res, next) {
             { expiresIn: '1h' } // El token expira en 1 hora
           );
 
-          // Envía el token como respuesta
-          res.render('token', { token });
+          if (userRole == 'user') {
+            res.redirect(`/token?token=${token}`); 
+          } else {
+            res.redirect('/users'); 
+          }
         } else {
           /* 11. En caso de fallo, redirija a '/' */
           res.redirect('/');
