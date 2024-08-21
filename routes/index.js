@@ -3,6 +3,8 @@ var router = express.Router();
 
 /* 1. Importe el módulo crypto */
 let crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = 'byqI7lRE9nRiKWgKNrZoAw==';
 
 /* 2. Cargue los modelos de acuerdo con la configuración de la conexión */
 const sequelize = require('../models/index.js').sequelize;
@@ -44,25 +46,36 @@ router.post('/login', async function (req, res, next) {
         let passwordHash = salt + "$" + hash
         /* 9. Compare passwordHash y userData.password que sean iguales. */
         if (passwordHash === userData.password) {
-          /* 9.1. Configuración de la expiración de la cookie */
-          const options = {
-            expires: new Date(
-              Date.now() + (60 * 1000)
-            )
-          }
+          // /* 9.1. Configuración de la expiración de la cookie */
+          // const options = {
+          //   expires: new Date(
+          //     Date.now() + (60 * 1000)
+          //   )
+          // }
 
-          /* 9.2. Cree la cookie 'username' con la variable user y la configuración de options  */
-          res.cookie("username", username, options)
+          // /* 9.2. Cree la cookie 'username' con la variable user y la configuración de options  */
+          // res.cookie("username", username, options)
 
-          /* 9.3. Habilite la sesión */
-          req.session.loggedin = true;
-          req.session.username = username;
+          // /* 9.3. Habilite la sesión */
+          // req.session.loggedin = true;
+          // req.session.username = username;
 
-          /* 9.4 Agregue el rol del usuario en la sesión */
-          req.session.role = userData.users_roles.roles_idrole_role.name
+          // /* 9.4 Agregue el rol del usuario en la sesión */
+          // req.session.role = userData.users_roles.roles_idrole_role.name
 
-          /* 10. En caso de éxito, redirija a '/users' */
-          res.redirect('/users');
+          // /* 10. En caso de éxito, redirija a '/users' */
+          // res.redirect('/users');
+          const userRole = userData.users_roles.roles_idrole_role.name;
+          
+          // Genera un token JWT con el rol del usuario
+          const token = jwt.sign(
+            { username, role: userRole },
+            SECRET_KEY,
+            { expiresIn: '1h' } // El token expira en 1 hora
+          );
+
+          // Envía el token como respuesta
+          res.json({ token });
         } else {
           /* 11. En caso de fallo, redirija a '/' */
           res.redirect('/');
