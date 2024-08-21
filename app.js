@@ -16,7 +16,7 @@ var authorizationSession = require('./middleware/authorization_session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const tokenRouter = require('/routes/token');
+const tokenRouter = require('./routes/token');
 
 var app = express();
 

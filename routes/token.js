@@ -17,7 +17,10 @@ router.get('/', function(req, res) {
         res.status(401).json({ message: 'Invalid token' });
       } else {
         // Renderiza la vista 'token.ejs' y pasa el token como parámetro
-        res.render('token', { token });
+        res.render('token', { 
+          username: req.cookies['username'],
+          token: token
+        });
       }
     });
   } else {

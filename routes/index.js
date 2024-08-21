@@ -46,24 +46,24 @@ router.post('/login', async function (req, res, next) {
         let passwordHash = salt + "$" + hash
         /* 9. Compare passwordHash y userData.password que sean iguales. */
         if (passwordHash === userData.password) {
-          // /* 9.1. Configuración de la expiración de la cookie */
-          // const options = {
-          //   expires: new Date(
-          //     Date.now() + (60 * 1000)
-          //   )
-          // }
+          /* 9.1. Configuración de la expiración de la cookie */
+          const options = {
+            expires: new Date(
+              Date.now() + (60 * 1000)
+            )
+          }
 
-          // /* 9.2. Cree la cookie 'username' con la variable user y la configuración de options  */
-          // res.cookie("username", username, options)
+          /* 9.2. Cree la cookie 'username' con la variable user y la configuración de options  */
+          res.cookie("username", username, options)
 
-          // /* 9.3. Habilite la sesión */
-          // req.session.loggedin = true;
-          // req.session.username = username;
+          /* 9.3. Habilite la sesión */
+          req.session.loggedin = true;
+          req.session.username = username;
 
-          // /* 9.4 Agregue el rol del usuario en la sesión */
-          // req.session.role = userData.users_roles.roles_idrole_role.name
+          /* 9.4 Agregue el rol del usuario en la sesión */
+          req.session.role = userData.users_roles.roles_idrole_role.name
 
-          // /* 10. En caso de éxito, redirija a '/users' */
+          /* 10. En caso de éxito, redirija a '/users' */
           // res.redirect('/users');
           const userRole = userData.users_roles.roles_idrole_role.name;
           
