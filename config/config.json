@@ -1,9 +1,10 @@
 {
   "development": {
     "username": "root",
-    "password": "21031993",
-    "database": "security",
-    "host": "127.0.0.1",
+    "password": "nyFAvRIbicJTvfiIenfbnIwNQcvWNjWY",
+    "database": "railway",
+    "host": "viaduct.proxy.rlwy.net",
+    "port": "53038",
     "dialect": "mysql"
   },
   "test": {
@@ -17,7 +18,7 @@
     "username": "root",
     "password": "nyFAvRIbicJTvfiIenfbnIwNQcvWNjWY",
     "database": "railway",
-    "host": "mysql.railway.internal",
+    "host": "viaduct.proxy.rlwy.net",
     "port": "53038",
     "dialect": "mysql"
   }
